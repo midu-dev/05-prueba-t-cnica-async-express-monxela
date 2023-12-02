@@ -53,8 +53,27 @@ export const procesarArchivo = (callbackResult) => {
   })
 }
 
-export function procesarArchivoPromise () {
-  // tu código aquí
+export async function procesarArchivoPromise () {
+  return new Promise((resolve, reject) => {
+    fs.readFile('input.txt', 'utf8', (error, contenido) => {
+      if (error) {
+        console.error('Error leyendo archivo:', error.message)
+        reject(error)
+      }
+
+      const textoProcesado = contenido.toUpperCase()
+
+      fs.writeFile('output.txt', textoProcesado, error => {
+        if (error) {
+          console.error('Error guardando archivo:', error.message)
+          reject(error)
+        }
+
+        console.log('Archivo procesado y guardado con éxito')
+        resolve()
+      })
+    })
+  })
 }
 
 // # EJERCICIO 4
