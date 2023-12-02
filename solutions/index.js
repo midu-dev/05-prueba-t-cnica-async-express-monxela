@@ -29,26 +29,27 @@ export function obtenerDatosPromise () {
 }
 
 // # EJERCICIO 3
-export function procesarArchivo () {
+// la función procesarArchivo lee el contenido del archivo input.txt
+// pasa a mayúsculas su contenido
+// y escribe el resultado en el fichero output.txt
+export const procesarArchivo = (callbackResult) => {
   fs.readFile('input.txt', 'utf8', (error, contenido) => {
     if (error) {
       console.error('Error leyendo archivo:', error.message)
-      return false
+      return callbackResult('Error leyendo archivo: ' + error.message)
     }
 
-    setTimeout(() => {
-      const textoProcesado = contenido.toUpperCase()
+    const textoProcesado = contenido.toUpperCase()
 
-      fs.writeFile('output.txt', textoProcesado, error => {
-        if (error) {
-          console.error('Error guardando archivo:', error.message)
-          return false
-        }
+    fs.writeFile('output.txt', textoProcesado, error => {
+      if (error) {
+        console.error('Error guardando archivo:', error.message)
+        return callbackResult('Error guardando archivo:', error.message)
+      }
 
-        console.log('Archivo procesado y guardado con éxito')
-        return true
-      })
-    }, 1000)
+      console.log('Archivo procesado y guardado con éxito')
+      return callbackResult()
+    })
   })
 }
 
