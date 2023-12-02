@@ -1,5 +1,6 @@
 import net from 'node:net'
 import fs from 'node:fs'
+import fsPromises from 'node:fs/promises'
 
 // # EJERCICIO 1
 export const ping = (ip, callback) => {
@@ -77,11 +78,15 @@ export async function procesarArchivoPromise () {
 }
 
 // # EJERCICIO 4
-export function leerArchivos () {
-  const archivo1 = fs.readSync('archivo1.txt', 'utf8')
-  const archivo2 = fs.readSync('archivo2.txt', 'utf8')
-  const archivo3 = fs.readSync('archivo3.txt', 'utf8')
+// Son 3 lecturas en serie (una después de otra) de ficheros
+// podemos hacer una lectura paralela de los 3 ficheros
+// para reducir el tiempo del proceso completo
+export async function leerArchivos () {
+  const promise1 = fsPromises.readFile('archivo1.txt', 'utf8')
+  const promise2 = fsPromises.readFile('archivo2.txt', 'utf8')
+  const promise3 = fsPromises.readFile('archivo3.txt', 'utf8')
 
+  const [archivo1, archivo2, archivo3] = await Promise.all([promise1, promise2, promise3])
   return `${archivo1} ${archivo2} ${archivo3}`
 }
 
