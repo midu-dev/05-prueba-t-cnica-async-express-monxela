@@ -1,6 +1,6 @@
 import { ping, obtenerDatosPromise, procesarArchivoPromise, procesarArchivo, leerArchivos } from '../solutions/index.js'
 
-import { describe, it, beforeEach, afterEach } from 'node:test'
+import { describe, it, afterEach } from 'node:test'
 import { equal, ifError } from 'node:assert/strict'
 import { unlinkSync, writeFileSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
